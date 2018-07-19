@@ -20,11 +20,6 @@
     - debug:
         var: "{{ item }}"
       with_items: "{{ init_result.results }}"
-    - name: feed inventory with containers names
-      add_host:
-        hostname: "{{ item.ansible_facts.docker_container.Name[1:] }}"
-        group: etcd-hosts
-      with_items: "{{ init_result.results }}"
     - name: generate inventory
       template:
         src: inventory_template.j2

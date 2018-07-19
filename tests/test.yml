@@ -21,9 +21,9 @@
       add_host:
         hostname: "{{ item.ansible_facts.Name }}"
         group:  etcd-hosts
-      with_dict: "{{ init_result }}"
+      loop: "{{ init_result|flatten(levels=1) }}"
       loop_control:
-        loop_var: item
+        index_var: index
 
 - hosts: etcd-hosts
   connection: docker

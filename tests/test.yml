@@ -17,15 +17,21 @@
       with_sequence: count=3
       register: init_result
     - debug: var=init_result
+    - debug:
+        var: "{{ item }}"
+      with_items: "{{ init_result.results }}"
     - name: feed inventory with containers names
       add_host:
-        hostname: "{{ item.ansible_facts.Name }}"
+        hostname: "{{ item.ansible_facts.docker_container.Name[1:] }}"
         group:  etcd-hosts
-      loop: "{{ init_result|flatten(levels=1) }}"
-      loop_control:
-        index_var: index
+      with_items: "{{ init_result.results }}"
+#    - name: generate inventory
+#      template:
+#        src: inventory_template.j2
+#        dest: inventory
 
 - hosts: etcd-hosts
+  become: yes
   connection: docker
   roles:
     - ../..

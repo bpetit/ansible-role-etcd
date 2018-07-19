@@ -11,4 +11,4 @@ script:
   - pwd
   - ansible-playbook -i tests/inventory tests/test.yml
   - pwd
-  - ansible-playbook -i tests/cluster_inventory tests/test-role.yml
+  - ansible-playbook -i tests/cluster_inventory tests/test_role.yml

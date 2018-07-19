@@ -1,4 +1,4 @@
 *.retry
-tests/test*
+tests/test/*
 tests/*.py
 tests/cluster_inventory

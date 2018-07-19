@@ -21,7 +21,7 @@
       add_host:
         hostname: "{{ item.ansible_facts.Name }}"
         group:  etcd-hosts
-      with_items: init_result
+      with_items: "{{ init_result }}"
 
 - hosts: etcd-hosts
   connection: docker

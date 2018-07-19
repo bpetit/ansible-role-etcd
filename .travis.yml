@@ -1,0 +1,11 @@
+language: python
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - pip install ansible==2.6.1
+
+script:
+  - ansible-playbook -i tests/inventory tests/test.yml

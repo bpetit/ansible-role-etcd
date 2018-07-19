@@ -1,0 +1,4 @@
+[etcd-hosts]
+{% for item in init_result.results %}
+{{ item.ansible_facts.docker_container.Name[1:] }}
+{% endfor %}

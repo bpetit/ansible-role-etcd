@@ -1,0 +1,21 @@
+---
+- hosts: localhost
+  connection: local
+  become: yes
+  pre_tasks:
+    - name: pre install docker-py
+      pip:
+        name: docker
+        state: latest
+  tasks:
+    - name: initialize docker containers for tests
+      docker_container:
+        name: "node0{{ item }}"
+        recreate: yes
+        image: debian:9
+        state: present
+      with_sequence: count=3
+      register: init_result
+    - debug: var=init_result
+#  roles:
+#    - etcd

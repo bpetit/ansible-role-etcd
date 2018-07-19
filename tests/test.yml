@@ -17,5 +17,13 @@
       with_sequence: count=3
       register: init_result
     - debug: var=init_result
-#  roles:
-#    - etcd
+    - name: feed inventory with containers names
+      add_host:
+        hostname: "{{ item.ansible_facts.Name }}"
+        group:  etcd-hosts
+      with_items: init_result
+
+- hosts: etcd-hosts
+  connection: docker
+  roles:
+    - etcd

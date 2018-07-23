@@ -1,0 +1,6 @@
+- hosts: etcd-hosts
+  connection: docker
+  gather_facts: no
+  tasks:
+    - name: install python3
+      raw: test -e /usr/bin/python3 || (apt -y update && apt install -y python3)

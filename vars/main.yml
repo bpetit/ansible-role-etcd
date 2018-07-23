@@ -1,2 +1,8 @@
 ---
 # vars file for etcd
+
+etcd_version: "3.0.12"
+etcd_package: "etcd-v{{ etcd_version }}-linux-amd64"
+etcd_archive_path: "/usr/local/share/{{ etcd_package }}.tar.gz"
+etcd_path: /usr/local/share/etcd
+etcd_url: "https://github.com/coreos/etcd/releases/download/v{{ etcd_version }}/{{ etcd_package }}.tar.gz"

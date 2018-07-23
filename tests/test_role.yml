@@ -1,6 +1,5 @@
 - hosts: etcd-hosts
-  user: root
-  gather_facts: no
+  remote_user: root
   connection: docker
   roles:
     - ../..

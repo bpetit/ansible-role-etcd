@@ -1,2 +1,38 @@
 ---
 # tasks file for etcd
+
+- name: download etcd
+  get_url:
+    dest: "{{ etcd_archive_path }}"
+    url: "{{ etcd_url }}"
+    validate_certs: no #TODO: fix this
+- name: unarchive etcd
+  unarchive:
+    dest: /usr/local/share
+    src: "{{ etcd_archive_path }}"
+    remote_src: yes
+  register: unarchive
+- name: symlink the etcd directory
+  file:
+    state: link
+    src: "/usr/local/share/{{ etcd_package }}"
+    dest: "{{ etcd_path }}"
+- name: create symlinks to etcd binaries
+  file:
+    state: link
+    src: "{{ etcd_path }}/{{ item }}"
+    dest: "/usr/local/bin/{{ item }}"
+  with_items:
+    - etcd
+    - etcdctl
+- name: create service configuration for etcd
+  template:
+    src: etcd.service.j2
+    dest: /lib/systemd/system/etcd.service
+- name: enable service
+  systemd:
+    name: etcd
+    enabled: True
+    state: started
+    user: True
+    daemon_reload: yes

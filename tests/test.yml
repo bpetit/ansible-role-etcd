@@ -30,9 +30,6 @@
       with_sequence: count=3
       register: init_result
     - debug: var=init_result
-    - debug:
-        var: "{{ item }}"
-      with_items: "{{ init_result.results }}"
     - name: generate inventory
       template:
         src: inventory_template.j2

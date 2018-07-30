@@ -15,6 +15,10 @@
         - lxc
         - lxc-dev
         - lxc-templates
+    - name: pre install pip requirements
+      pip:
+        name: lxc-python2
+        state: present
   tasks:
     - name: initialize docker containers for tests
       lxc_container:

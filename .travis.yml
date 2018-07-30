@@ -6,6 +6,7 @@ services:
 
 before_install:
   - pip install ansible==2.6.1
+  - pip install lxc-python2
 
 script:
   - ansible-playbook -i tests/inventory tests/test.yml

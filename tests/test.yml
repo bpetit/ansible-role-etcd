@@ -36,7 +36,7 @@
         dest: cluster_inventory
     - name: get the subnet address of the lxc bridge network
       shell: "ipcalc -n $(ip a s lxcbr0 | grep \"inet \" | aws '{ print $2 }') | grep Network | awk '{ print $2 }'"
-    - debug: var=result
+      register: result
     - name: pre-configure internet connectivity for containers
       iptables:
         table: nat

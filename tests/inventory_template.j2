@@ -1,4 +1,4 @@
 [etcd-hosts]
 {% for item in init_result.results %}
-{{ item.lxc.container.name }}
+{{ item.lxc_container.name }}
 {% endfor %}

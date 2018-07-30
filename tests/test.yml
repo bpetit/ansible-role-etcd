@@ -3,21 +3,24 @@
   connection: local
   become: yes
   pre_tasks:
-    - name: pre install docker-py
-      pip:
-        name: docker
-        state: latest
+    - name: pre install requirements
+      apt:
+        name: ipcalc
+        state: present
+      with_items:
+        - ipcalc
+        - lxc
+        - lxc-dev
+        - lxc-utils
+        - lxc-templates
   tasks:
     - name: initialize docker containers for tests
-      docker_container:
+      lxc_container:
         name: "node0{{ item }}"
-        recreate: yes
-        image: bpetit:systemd-base
+        container_log: true
+        template: debian
         state: started
-        auto_remove: yes
-        detach: True
-        command: "tail -f /dev/null &"
-        interactive: yes
+        template_options: --release stretch
       with_sequence: count=3
       register: init_result
     - debug: var=init_result
@@ -28,9 +31,8 @@
       template:
         src: inventory_template.j2
         dest: cluster_inventory
-    - name: get the subnet address of the docker bridge network
-      shell: "{% raw %}docker network inspect bridge --format '{{ (index .IPAM.Config 0).Subnet }}' {% endraw %}"
-      register: result
+    - name: get the subnet address of the lxc bridge network
+      shell: "ipcalc -n $(ip a s lxcbr0 | grep \"inet \" | aws '{ print $2 }') | grep Network | awk '{ print $2 }'"
     - debug: var=result
     - name: pre-configure internet connectivity for containers
       iptables:

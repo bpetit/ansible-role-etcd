@@ -1,5 +1,5 @@
 - hosts: etcd-hosts
   remote_user: root
-  connection: docker
+  connection: lxc
   roles:
     - ../..

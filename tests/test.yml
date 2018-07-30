@@ -3,9 +3,12 @@
   connection: local
   become: yes
   pre_tasks:
+    - name: update apt cache
+      apt:
+        update_cache: yes
     - name: pre install requirements
       apt:
-        name: ipcalc
+        name: "{{ item }}"
         state: present
       with_items:
         - ipcalc

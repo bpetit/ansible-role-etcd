@@ -14,7 +14,6 @@
         - ipcalc
         - lxc
         - lxc-dev
-        - lxc-utils
         - lxc-templates
   tasks:
     - name: initialize docker containers for tests

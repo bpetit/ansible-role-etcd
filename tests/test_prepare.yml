@@ -1,6 +1,0 @@
-- hosts: localhost
-  tasks:
-    name: install lxc-python2
-    pip:
-      name: lxc-python2
-      state: present
